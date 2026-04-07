@@ -1,5 +1,7 @@
-// Tipos de GitHub - Issue 02
-// TODO: Completa los tipos según el issue 02
+/**
+ * Tipos de GitHub - Issue 02
+ * Interfaces para datos de GitHub API
+ */
 
 export interface GitHubRepository {
   id: number
@@ -32,7 +34,7 @@ export interface GitHubCommit {
 }
 
 export interface GitHubReadme {
-  content: string
+  content: string // Base64 encoded
   download_url: string
   html_url: string
 }

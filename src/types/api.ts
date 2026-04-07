@@ -1,4 +1,7 @@
-// Tipos de API - Issue 03
+/**
+ * Tipos de API - Issue 02
+ * Interfaces para requests y responses del backend
+ */
 
 import { Project, ProjectDetail } from './project'
 import { Tag } from './tags'
@@ -28,7 +31,7 @@ export interface GetProjectDetailResponse {
 }
 
 export interface UpdateProjectTagsRequest {
-  tags: string[]
+  tags: string[] // Tag IDs
 }
 
 export interface UpdateProjectTagsResponse {

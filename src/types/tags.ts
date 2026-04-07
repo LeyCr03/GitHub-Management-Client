@@ -1,12 +1,14 @@
-// Tipos de Tags - Issue 02
-// TODO: Completa los tipos según el issue 02
+/**
+ * Tipos de Tags - Issue 02
+ * Interfaces y tipos para gestión de tags
+ */
 
 export type TagType = 'finished' | 'side-project' | 'pet-project' | 'learning' | 'archived' | 'custom'
 
 export interface Tag {
   id: string
   name: string
-  color: string
+  color: string // hex color: #FF5733
   type: TagType
   createdAt: string
   updatedAt: string
@@ -21,7 +23,9 @@ export interface TagColorMap {
   custom: string
 }
 
-// Legacy enum - para compatibilidad
+/**
+ * Legacy enum - para compatibilidad con código existente
+ */
 export enum RepoTag {
   COMMERCIAL = 'commercial',
   SIDE_PROJECT = 'side-project',

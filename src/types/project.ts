@@ -1,10 +1,13 @@
-// Tipos de Proyecto - Issue 02
+/**
+ * Tipos de Proyecto - Issue 02
+ * Interfaces para proyectos y datos relacionados
+ */
 
 import { Tag } from './tags'
 import { GitHubCommit } from './github'
 
 export interface ProjectReadme {
-  content: string
+  content: string // Markdown raw
   rawUrl: string
   lastUpdated: string
 }
@@ -20,7 +23,7 @@ export interface Project {
   repositoryId: number
   name: string
   description: string
-  url: string
+  url: string // GitHub repo URL
   tags: Tag[]
   readme?: ProjectReadme
   coverImage?: ProjectImage
@@ -45,10 +48,10 @@ export interface ProjectDetail extends Project {
 
 export interface ProjectCreateRequest {
   repositoryId: number
-  tags: string[]
+  tags: string[] // Tag IDs
 }
 
 export interface ProjectUpdateRequest {
-  tags: string[]
+  tags: string[] // Tag IDs
   coverImage?: ProjectImage
 }

@@ -4,8 +4,8 @@ Usa este checklist para rastrear tu progreso mientras completas los issues.
 
 ## 📊 Progress General
 
-**Issues Completados:** 1/10  
-**Progreso:** 10%
+**Issues Completados:** 2/10  
+**Progreso:** 20%
 
 ---
 
@@ -21,13 +21,13 @@ Usa este checklist para rastrear tu progreso mientras completas los issues.
 - [x] ✅ **COMPLETADO**
 
 ### Issue 02: Tipos TypeScript ⏱️ 45 min
-- [ ] Crear `src/types/github.ts`
-- [ ] Crear `src/types/tags.ts`
-- [ ] Crear `src/types/project.ts`
-- [ ] Crear `src/types/api.ts`
-- [ ] Crear `src/types/index.ts`
-- [ ] Verificar TypeScript compila
-- [ ] ✅ **COMPLETADO**
+- [x] Crear `src/types/github.ts`
+- [x] Crear `src/types/tags.ts`
+- [x] Crear `src/types/project.ts`
+- [x] Crear `src/types/api.ts`
+- [x] Crear `src/types/index.ts`
+- [x] Verificar TypeScript compila
+- [x] ✅ **COMPLETADO**
 
 ### Issue 03: Cliente API ⏱️ 45 min
 - [ ] Crear `src/lib/axios-instance.ts`
@@ -150,11 +150,11 @@ Usa este checklist para rastrear tu progreso mientras completas los issues.
 
 | Metrica | Objetivo | Actual |
 |---------|----------|--------|
-| Issues completados | 10 | 1 ✅ |
+| Issues completados | 10 | 2 ✅ |
 | Componentes creados | 15+ | 0 |
-| Tipos definidos | 5+ | 1 |
+| Tipos definidos | 5+ | 5 ✅ |
 | Hooks creados | 5 | 0 |
-| Horas de trabajo | ~9.5 | 0.5 |
+| Horas de trabajo | ~9.5 | 1 |
 
 ---
 
