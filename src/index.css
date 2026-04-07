@@ -4,19 +4,18 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  --primary: oklch(0.205 0 0);
-  --secondary: oklch(0.97 0 0);
-  --background: oklch(1 0 0);
-  --card: oklch(1 0 0);
-  --sidebar: oklch(0.985 0 0);
-  --foreground: oklch(0.145 0 0);
-  --radius: 0.625rem;
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
+  --primary: #695D4A;
+  --secondary: #65684A;
+  --background-primary: #F2F2F2;
+  --background: #FCFCFC;
+  --card: #E6E6E6;
+  --sidebar: #E0E0E0;
+  --foreground: #000000;
+  --onPrimary: #FFFFFF;
+  --onSecondary: #FFFFFF;
+  --onBackground: #000000;
+  --onCard: #000000;
+  --onSidebar: #000000;
   --muted-foreground: oklch(0.556 0 0);
   --accent: oklch(0.97 0 0);
   --accent-foreground: oklch(0.205 0 0);
@@ -36,18 +35,6 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --primary: #695D4A;
-    --secondary: #4A5668;
-    --background: #1F1F1F;
-    --card: #2E2E2E;
-    --sidebar: #333333;
-    --foreground: #DFDAD2;
-  }
-
 }
 
 @theme inline {
@@ -92,17 +79,18 @@
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
+  --primary: #695D4A;
+  --secondary: #4A5668;
+  --background-primary: #1F1F1F;
+  --background: #0F0F0F;
+  --card: #2E2E2E;
+  --sidebar: #333333;
+  --foreground: #DFDAD2;
+  --onPrimary: #FFFFFF;
+  --onSecondary: #FFFFFF;
+  --onBackground: #FFFFFF;
+  --onCard: #FFFFFF;
+  --onSidebar: #FFFFFF;
   --muted-foreground: oklch(0.708 0 0);
   --accent: oklch(0.269 0 0);
   --accent-foreground: oklch(0.985 0 0);
