@@ -44,7 +44,7 @@ export const useProjectDetail = (projectId: string): UseProjectDetailReturn => {
   )
 
   return {
-    project: data,
+    project: data ?? undefined,
     isLoading,
     isError: !!error,
     mutate,

@@ -4,8 +4,8 @@ Usa este checklist para rastrear tu progreso mientras completas los issues.
 
 ## 📊 Progress General
 
-**Issues Completados:** 4/10  
-**Progreso:** 40%
+**Issues Completados:** 5/10  
+**Progreso:** 50%
 
 ---
 
@@ -48,12 +48,12 @@ Usa este checklist para rastrear tu progreso mientras completas los issues.
 - [x] ✅ **COMPLETADO**
 
 ### Issue 05: Componentes Layout ⏱️ 60 min
-- [ ] Crear `src/components/layout/MainLayout.tsx`
-- [ ] Crear `src/components/layout/Sidebar.tsx`
-- [ ] Crear `src/components/layout/Header.tsx`
-- [ ] Crear `src/styles/layout.css`
-- [ ] Verificar layout en browser
-- [ ] ✅ **COMPLETADO**
+- [x] Crear `src/components/layout/MainLayout.tsx`
+- [x] Crear `src/components/layout/Sidebar.tsx`
+- [x] Crear `src/components/layout/Header.tsx`
+- [x] Crear `src/styles/layout.css`
+- [x] Verificar TypeScript compila
+- [x] ✅ **COMPLETADO**
 
 ### Issue 06: Dashboard y FoldersView ⏱️ 90 min
 - [ ] Crear `src/components/dashboard/FoldersView.tsx`
@@ -150,11 +150,11 @@ Usa este checklist para rastrear tu progreso mientras completas los issues.
 
 | Metrica | Objetivo | Actual |
 |---------|----------|--------|
-| Issues completados | 10 | 4 ✅ |
-| Componentes creados | 15+ | 11 ✅ |
+| Issues completados | 10 | 5 ✅ |
+| Componentes creados | 15+ | 14 ✅ |
 | Tipos definidos | 5+ | 5 ✅ |
 | Hooks creados | 5 | 5 ✅ |
-| Horas de trabajo | ~9.5 | 3.5 |
+| Horas de trabajo | ~9.5 | 4.5 |
 
 ---
 
