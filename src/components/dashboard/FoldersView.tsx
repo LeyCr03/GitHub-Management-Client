@@ -16,7 +16,7 @@ import { useGithubProjects } from '@/hooks'
 import { Project, Tag } from '@/types'
 import { ProjectCard } from './ProjectCard'
 import { FolderCard } from './FolderCard'
-import { FolderOpen } from 'lucide-react'
+import { Folder, FolderOpen } from 'lucide-react'
 
 interface FoldersViewProps {
   selectedTagId?: string | null
@@ -30,21 +30,17 @@ export const FoldersView = ({
   const { projects, tags, isLoading, isError } = useGithubProjects()
   const [expandedFolders, setExpandedFolders] = useState<Set<string>>(new Set())
 
-  /**
-   * Organiza proyectos por tags
-   * Crea un Map donde la clave es el tag y el valor es el array de proyectos
-   */
   const projectsByTag = useMemo(() => {
     if (!projects || !tags) return new Map()
 
     const grouped = new Map<Tag, Project[]>()
 
-    // Inicializar todos los tags
+   
     tags.forEach((tag) => {
       grouped.set(tag, [])
     })
 
-    // Agrupar proyectos
+   
     projects.forEach((project) => {
       project.tags.forEach((projectTag) => {
         const fullTag = tags.find((t) => t.id === projectTag.id)
@@ -58,10 +54,7 @@ export const FoldersView = ({
     return grouped
   }, [projects, tags])
 
-  /**
-   * Filtra tags por el seleccionado
-   * Si no hay selección, muestra todos
-   */
+
   const filteredTags = useMemo(() => {
     const items = Array.from(projectsByTag.entries())
     if (!selectedTagId) return items
@@ -108,24 +101,24 @@ export const FoldersView = ({
   }
 
   return (
-    <div className="space-y-10 p-8">
+    <div className="space-y-8 p-8">
       {/* Welcome Section */}
       <div className="space-y-2">
         <h1 className="text-3xl font-bold text-foreground">
-          Welcome Back! 👋
+          Your projects
         </h1>
         <p className="text-muted-foreground">
-          Tienes {projects?.length || 0} proyectos organizados en {tags?.length || 0} carpetas
+          You have {projects?.length || 0} projects organized in {tags?.length || 0} folders
         </p>
       </div>
 
       {/* Folders Grid */}
       {filteredTags.length > 0 && (
-        <div className="space-y-6">
-          <h2 className="text-xl font-bold text-foreground">
-            📁 Folders
+        <div className="space-y-5">
+          <h2 className="text-md text-foreground/70">
+           <Folder className="w-4 h-4 inline-block mr-2" /> Folders
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-10">
             {filteredTags.map(([tag]: [Tag, Project[]]) => (
               <FolderCard
                 key={tag.id}

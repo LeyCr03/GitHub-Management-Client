@@ -1,12 +1,4 @@
-/**
- * Página del Dashboard
- * Issue 06 - Dashboard y FoldersView
- * Issue 11 - Integración con Servidor NestJS
- *
- * Estructura:
- * - MainLayout (Sidebar + Header + Main)
- * - FoldersView (proyectos agrupados por tags)
- */
+
 
 import { useState } from 'react'
 import { MainLayout } from '@/components/layout/MainLayout'

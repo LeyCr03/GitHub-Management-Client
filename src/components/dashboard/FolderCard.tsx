@@ -4,15 +4,15 @@
  *
  * Características:
  * - Layout horizontal limpio
- * - Ícono pequeño y redondeado a la izquierda
+ * - SVG folder icon con clipPath (forma realista de carpeta)
  * - Nombre de carpeta junto al ícono
- * - Fecha abajo a la izquierda
+ * - Fecha debajo del título
  * - Botón más arriba a la derecha
  * - Diseño muy minimalista
  */
 
 import { Tag } from '@/types'
-import { MoreVertical, Folder } from 'lucide-react'
+import { MoreVertical } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
 interface FolderCardProps {
@@ -20,6 +20,46 @@ interface FolderCardProps {
   onSelect: () => void
   isSelected: boolean
 }
+
+/**
+ * SVG Folder Icon con clipPath
+ * Simula la forma realista de una carpeta
+ */
+const FolderIcon = ({ color }: { color: string }) => (
+  <svg
+    width="32"
+    height="32"
+    viewBox="0 0 32 32"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className="flex-shrink-0"
+  >
+    {/* ClipPath para crear la forma de carpeta */}
+    <defs>
+      <clipPath id="folderClip">
+        {/* Forma de carpeta: tabs superior izquierdo + rectángulo principal */}
+        <path d="M 4 8 L 10 8 L 12 6 L 28 6 L 28 24 C 28 25.1 27.1 26 26 26 L 4 26 C 2.9 26 2 25.1 2 24 L 2 10 C 2 8.9 2.9 8 4 8 Z" />
+      </clipPath>
+    </defs>
+
+    {/* Fondo de la carpeta con clipPath */}
+    <rect
+      x="2"
+      y="6"
+      width="26"
+      height="20"
+      fill={color}
+      clipPath="url(#folderClip)"
+    />
+
+    {/* Tab de la carpeta (parte superior izquierda) */}
+    <path
+      d="M 4 8 L 10 8 L 12 6 L 12 8 L 10 8 L 4 8"
+      fill={color}
+      opacity="0.8"
+    />
+  </svg>
+)
 
 export const FolderCard = ({
   tag,
@@ -34,20 +74,14 @@ export const FolderCard = ({
                   flex items-start justify-between
                   ${
                     isSelected
-                      ? 'bg-muted/40 border border-primary/20'
+                      ? 'bg-muted/40 border border-primary/30'
                       : 'bg-background/40 border border-border/30 hover:bg-muted/30 hover:border-border/50'
                   }`}
     >
-      {/* Left Section - Icon + Title + Date */}
+      {/* Left Section - Folder Icon + Title + Date */}
       <div className="flex items-start gap-3 flex-1 min-w-0">
-        {/* Icon in colored rounded square */}
-        <div
-          className="w-8 h-8 rounded-md flex items-center justify-center
-                     flex-shrink-0 group-hover:scale-110 transition-transform duration-300"
-          style={{ backgroundColor: tag.color }}
-        >
-          <Folder className="w-4 h-4 text-white" />
-        </div>
+        {/* SVG Folder Icon */}
+        <FolderIcon color={tag.color} />
 
         {/* Title and Meta */}
         <div className="flex-1 min-w-0">
@@ -64,7 +98,7 @@ export const FolderCard = ({
       <Button
         variant="ghost"
         size="sm"
-        className="h-5 w-5 p-0 ml-2 flex-shrink-0 opacity-60 group-hover:opacity-100 transition-opacity hover:bg-muted/40"
+        className="h-5 w-5 p-0 ml-2 shrink-0 opacity-60 group-hover:opacity-100 transition-opacity hover:bg-muted/40"
         onClick={(e) => {
           e.stopPropagation()
         }}
