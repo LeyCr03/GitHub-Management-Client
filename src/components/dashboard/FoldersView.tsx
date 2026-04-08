@@ -1,11 +1,13 @@
 /**
- * Vista de folders (tags) con proyectos agrupados
+ * Vista de folders (tags) con proyectos agrupados - Mejorada
  * Issue 06 - Dashboard y FoldersView
+ * Issue 12 - Rediseño UI Moderno
  *
  * Muestra:
- * - Folders (tags) con iconos coloreados
+ * - Folders (tags) con iconos coloreados en grid
  * - Proyectos agrupados por tag
- * - Folders expandibles/colapsibles
+ * - Welcome message
+ * - Latest projects section
  * - Filtrado por tag seleccionado
  */
 
@@ -13,6 +15,7 @@ import { useMemo, useState } from 'react'
 import { useGithubProjects } from '@/hooks'
 import { Project, Tag } from '@/types'
 import { ProjectCard } from './ProjectCard'
+import { FolderCard } from './FolderCard'
 import { FolderOpen } from 'lucide-react'
 
 interface FoldersViewProps {
@@ -105,43 +108,72 @@ export const FoldersView = ({
   }
 
   return (
-    <div className="space-y-8 p-6">
-      {filteredTags.map(([tag, tagProjects]: [Tag, Project[]]) => (
-        <div key={tag.id}>
-          {/* Folder Header */}
-          <button
-            onClick={() => toggleFolder(tag.id)}
-            className="flex items-center gap-3 mb-4 group cursor-pointer hover:opacity-80 transition-opacity"
-          >
-            <div
-              className="w-6 h-6 rounded flex items-center justify-center bg-background group-hover:bg-muted transition-colors"
-              style={{ borderColor: tag.color, borderWidth: '2px' }}
-            >
-              <FolderOpen
-                className="w-4 h-4"
-                style={{ color: tag.color }}
-              />
-            </div>
-            <h2 className="text-xl font-semibold text-foreground">{tag.name}</h2>
-            <span className="ml-2 px-2 py-1 bg-muted text-xs text-muted-foreground rounded">
-              {tagProjects.length} proyecto{tagProjects.length !== 1 ? 's' : ''}
-            </span>
-          </button>
+    <div className="space-y-10 p-8">
+      {/* Welcome Section */}
+      <div className="space-y-2">
+        <h1 className="text-3xl font-bold text-foreground">
+          Welcome Back! 👋
+        </h1>
+        <p className="text-muted-foreground">
+          Tienes {projects?.length || 0} proyectos organizados en {tags?.length || 0} carpetas
+        </p>
+      </div>
 
-          {/* Projects Grid */}
-          {expandedFolders.has(tag.id) && (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 ml-9">
-              {tagProjects.map((project) => (
-                <ProjectCard
-                  key={project.id}
-                  project={project}
-                  onSelect={onProjectSelect}
-                />
-              ))}
-            </div>
-          )}
+      {/* Folders Grid */}
+      {filteredTags.length > 0 && (
+        <div className="space-y-6">
+          <h2 className="text-xl font-bold text-foreground">
+            📁 Folders
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {filteredTags.map(([tag, tagProjects]: [Tag, Project[]]) => (
+              <FolderCard
+                key={tag.id}
+                tag={tag}
+                projectCount={tagProjects.length}
+                onSelect={() => toggleFolder(tag.id)}
+                isSelected={expandedFolders.has(tag.id)}
+              />
+            ))}
+          </div>
         </div>
-      ))}
+      )}
+
+      {/* Latest Projects */}
+      {filteredTags.length > 0 && (
+        <div className="space-y-6">
+          <h2 className="text-xl font-bold text-foreground">
+            📌 Latest Projects
+          </h2>
+          <div className="space-y-8">
+            {filteredTags.map(([tag, tagProjects]: [Tag, Project[]]) => (
+              expandedFolders.has(tag.id) && tagProjects.length > 0 && (
+                <div key={tag.id} className="space-y-4">
+                  <div className="flex items-center gap-3">
+                    <div
+                      className="w-4 h-4 rounded-full"
+                      style={{ backgroundColor: tag.color }}
+                    />
+                    <h3 className="font-semibold text-foreground">{tag.name}</h3>
+                    <span className="text-xs text-muted-foreground">
+                      ({tagProjects.length})
+                    </span>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {tagProjects.map((project) => (
+                      <ProjectCard
+                        key={project.id}
+                        project={project}
+                        onSelect={onProjectSelect}
+                      />
+                    ))}
+                  </div>
+                </div>
+              )
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   )
 }

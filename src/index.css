@@ -284,3 +284,212 @@
 .prose li {
   @apply mb-2;
 }
+
+/* ===== REDISEÑO UI MODERNO - Issue 12 ===== */
+
+/* Smooth transitions by default */
+* {
+  @apply transition-colors duration-200;
+}
+
+/* Hover lift effect */
+.hover-lift {
+  @apply hover:-translate-y-1 hover:shadow-lg transition-all duration-300;
+}
+
+/* Hover glow effect */
+.hover-glow {
+  @apply hover:shadow-[0_0_20px_rgba(0,82,204,0.2)] transition-shadow duration-300;
+}
+
+/* Card improvements */
+.card {
+  @apply bg-gradient-to-br from-card to-card/80 border border-border/40 transition-all duration-300;
+}
+
+.card:hover {
+  @apply border-border/60 shadow-lg;
+}
+
+/* Button improvements */
+button {
+  @apply transition-all duration-200;
+}
+
+button:active {
+  @apply scale-95;
+}
+
+/* Input improvements */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea,
+select {
+  @apply transition-all duration-200;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+textarea:focus,
+select:focus {
+  @apply ring-2 ring-primary/20 border-primary/40;
+}
+
+/* Smooth animations */
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* Utility animation classes */
+.animate-shimmer {
+  animation: shimmer 2s infinite;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    transparent 100%
+  );
+  background-size: 1000px 100%;
+}
+
+.animate-slide-in-left {
+  animation: slideInLeft 0.3s ease-out;
+}
+
+.animate-slide-in-right {
+  animation: slideInRight 0.3s ease-out;
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.2s ease-out;
+}
+
+.animate-bounce-gentle {
+  animation: bounce 2s infinite;
+}
+
+/* Backdrop blur effect */
+.backdrop-blur-sm {
+  backdrop-filter: blur(4px);
+}
+
+.backdrop-blur-md {
+  backdrop-filter: blur(12px);
+}
+
+/* Gradient text */
+.gradient-text {
+  @apply bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent;
+}
+
+/* Glassmorphism effect */
+.glass {
+  @apply bg-white/10 backdrop-blur-md border border-white/20;
+}
+
+/* Focus ring */
+.focus-ring {
+  @apply focus:outline-none focus:ring-2 focus:ring-primary/40 focus:ring-offset-2 focus:ring-offset-background;
+}
+
+/* Shadow enhancements */
+.shadow-soft {
+  @apply shadow-md;
+}
+
+.shadow-medium {
+  @apply shadow-lg;
+}
+
+.shadow-hard {
+  @apply shadow-2xl;
+}
+
+/* Badge enhancements */
+.badge {
+  @apply inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium transition-all duration-200;
+}
+
+.badge:hover {
+  @apply shadow-md;
+}
+
+/* Responsive improvements */
+@media (max-width: 640px) {
+  .hide-on-mobile {
+    @apply hidden;
+  }
+
+  .sidebar {
+    @apply w-0 -translate-x-full absolute;
+  }
+
+  .right-panel {
+    @apply hidden;
+  }
+}
+
+@media (max-width: 1024px) {
+  .right-panel {
+    @apply w-64;
+  }
+
+  .grid {
+    @apply grid-cols-2;
+  }
+}
+
+@media (min-width: 1536px) {
+  .grid {
+    @apply grid-cols-4;
+  }
+}
