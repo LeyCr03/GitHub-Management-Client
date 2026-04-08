@@ -1,16 +1,17 @@
 /**
- * Tarjeta mejorada para mostrar carpetas/tags
+ * Tarjeta de carpeta (FolderCard) - Estilo TaskFlow
  * Issue 12 - Rediseño UI Moderno
  *
  * Características:
- * - Iconos grandes y coloridos
- * - Contador de proyectos
- * - Efectos hover refinados
- * - Gradient background opcional
+ * - Diseño limpio y minimalista
+ * - Ícono de color en esquina superior
+ * - Nombre y contador en el medio
+ * - Fecha y botón más en la parte inferior
+ * - Efecto hover suave
  */
 
 import { Tag } from '@/types'
-import { MoreVertical } from 'lucide-react'
+import { MoreVertical, Folder } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
 interface FolderCardProps {
@@ -29,56 +30,60 @@ export const FolderCard = ({
   return (
     <button
       onClick={onSelect}
-      className={`group relative overflow-hidden rounded-xl p-6
+      className={`group relative overflow-hidden rounded-xl p-5 min-h-[140px]
                   transition-all duration-300 text-left
-                  ${isSelected
-        ? 'bg-gradient-to-br from-primary/10 to-primary/5 border-primary/40 shadow-md'
-        : 'bg-card hover:bg-muted/40 border-border/40 hover:shadow-lg'
-        }
-                  border hover:-translate-y-1`}
+                  flex flex-col justify-between
+                  ${
+                    isSelected
+                      ? 'bg-gradient-to-br from-primary/10 to-primary/5 border-primary/30 shadow-md'
+                      : 'bg-card/50 border border-border/30 hover:border-border/50 hover:shadow-lg hover:bg-card'
+                  }
+                  backdrop-blur-sm`}
     >
-      {/* Background gradient accent */}
+      {/* Top Section - Icon + Title */}
+      <div className="space-y-3">
+        {/* Icon in colored square */}
+        <div
+          className="w-10 h-10 rounded-lg flex items-center justify-center
+                     group-hover:scale-110 transition-transform duration-300 flex-shrink-0"
+          style={{ backgroundColor: tag.color }}
+        >
+          <Folder className="w-5 h-5 text-white" />
+        </div>
+
+        {/* Title and Count */}
+        <div>
+          <h3 className="font-semibold text-foreground text-sm line-clamp-2 group-hover:text-primary transition-colors">
+            {tag.name}
+          </h3>
+          <p className="text-xs text-muted-foreground mt-1">
+            {projectCount} proyecto{projectCount !== 1 ? 's' : ''}
+          </p>
+        </div>
+      </div>
+
+      {/* Bottom Section - Date + More Button */}
+      <div className="flex items-center justify-between pt-3 border-t border-border/10 mt-2">
+        <span className="text-xs text-muted-foreground">Apr 2, 2025</span>
+        <Button
+          variant="ghost"
+          size="sm"
+          className="h-5 w-5 p-0 opacity-0 group-hover:opacity-100 transition-opacity hover:bg-muted/40"
+          onClick={(e) => {
+            e.stopPropagation()
+          }}
+        >
+          <MoreVertical className="w-4 h-4 text-muted-foreground" />
+        </Button>
+      </div>
+
+      {/* Subtle background gradient on hover */}
       <div
-        className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-300"
+        className="absolute inset-0 opacity-0 group-hover:opacity-5 transition-opacity duration-300 -z-10 pointer-events-none"
         style={{
           background: `linear-gradient(135deg, ${tag.color}, ${tag.color}99)`,
         }}
       />
-
-      {/* Content */}
-      <div className="relative space-y-4">
-        {/* Icon Circle */}
-        <div
-          className="w-12 h-12 rounded-lg flex items-center justify-center
-                     text-2xl group-hover:scale-110 transition-transform duration-300
-                     font-bold"
-          style={{ backgroundColor: `${tag.color}15` }}
-        >
-          📁
-        </div>
-
-        {/* Title & Description */}
-        <div>
-          <h3 className="font-semibold text-foreground text-base truncate group-hover:text-primary transition-colors">
-            {tag.name}
-          </h3>
-          <p className="text-sm text-muted-foreground mt-1">
-            {projectCount} proyecto{projectCount !== 1 ? 's' : ''}
-          </p>
-        </div>
-
-        {/* Meta & Action */}
-        <div className="flex items-center justify-between pt-4 border-t border-border/20">
-          <span className="text-xs text-muted-foreground">Apr 2, 2025</span>
-          <Button
-            variant="ghost"
-            size="sm"
-            className="h-6 w-6 p-0 opacity-0 group-hover:opacity-100 transition-opacity"
-          >
-            <MoreVertical className="w-4 h-4" />
-          </Button>
-        </div>
-      </div>
     </button>
   )
 }
