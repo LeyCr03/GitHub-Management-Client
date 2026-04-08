@@ -1,5 +1,13 @@
+/**
+ * Helpers y utilidades
+ * Issue 03 - Cliente API
+ */
+
 import { RepoTag } from "@/types/tags";
 
+/**
+ * Etiquetas legacy para tipos de repositorio
+ */
 export const RepoTagLabels: Record<RepoTag, string> = {
   [RepoTag.COMMERCIAL]: 'Commercial Projects',
   [RepoTag.SIDE_PROJECT]: 'Side Projects',
@@ -7,11 +15,12 @@ export const RepoTagLabels: Record<RepoTag, string> = {
   [RepoTag.PET_PROJECT]: 'Pet Projects',
 };
 
-// Helpers - Issue 03
-// TODO: Completa según issue 03
-
 /**
- * Construye URL relativa para imagen
+ * Construye URL completa para imagen desde ruta relativa
+ * @example
+ * getImageUrl('project-banner.png') // http://localhost:3000/api/images/project-banner.png
+ * getImageUrl('https://...') // https://... (devuelve tal cual)
+ * getImageUrl(null) // null
  */
 export const getImageUrl = (imageUrl: string | null): string | null => {
   if (!imageUrl) return null
@@ -20,7 +29,9 @@ export const getImageUrl = (imageUrl: string | null): string | null => {
 }
 
 /**
- * Formatea fecha para display
+ * Formatea fecha a formato legible en español
+ * @example
+ * formatDate('2026-04-07') // '7 abr 2026'
  */
 export const formatDate = (date: string | Date): string => {
   const d = new Date(date)
@@ -32,7 +43,9 @@ export const formatDate = (date: string | Date): string => {
 }
 
 /**
- * Obtiene el dominio del repositorio
+ * Extrae el owner de una URL de GitHub
+ * @example
+ * getRepoOwner('https://github.com/octocat/Hello-World') // 'octocat'
  */
 export const getRepoOwner = (url: string): string => {
   const match = url.match(/github\.com\/([^/]+)/)
@@ -40,7 +53,9 @@ export const getRepoOwner = (url: string): string => {
 }
 
 /**
- * Obtiene el nombre del repositorio
+ * Extrae el nombre del repositorio de una URL de GitHub
+ * @example
+ * getRepoName('https://github.com/octocat/Hello-World') // 'Hello-World'
  */
 export const getRepoName = (url: string): string => {
   const match = url.match(/github\.com\/[^/]+\/([^/]+)/)
@@ -48,7 +63,11 @@ export const getRepoName = (url: string): string => {
 }
 
 /**
- * Abrevia número (1000 → 1k)
+ * Abrevia números grandes a formato más legible
+ * @example
+ * abbreviateNumber(1000) // '1k'
+ * abbreviateNumber(1500000) // '1.5M'
+ * abbreviateNumber(42) // '42'
  */
 export const abbreviateNumber = (num: number): string => {
   if (num >= 1000000) {

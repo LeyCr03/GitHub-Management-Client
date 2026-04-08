@@ -4,8 +4,8 @@ Usa este checklist para rastrear tu progreso mientras completas los issues.
 
 ## 📊 Progress General
 
-**Issues Completados:** 2/10  
-**Progreso:** 20%
+**Issues Completados:** 3/10  
+**Progreso:** 30%
 
 ---
 
@@ -30,12 +30,12 @@ Usa este checklist para rastrear tu progreso mientras completas los issues.
 - [x] ✅ **COMPLETADO**
 
 ### Issue 03: Cliente API ⏱️ 45 min
-- [ ] Crear `src/lib/axios-instance.ts`
-- [ ] Crear `src/lib/api.ts`
-- [ ] Crear/mejorar `src/lib/helpers.ts`
-- [ ] Crear `src/lib/swr-config.ts`
-- [ ] Verificar imports correctos
-- [ ] ✅ **COMPLETADO**
+- [x] Crear `src/lib/axios-instance.ts`
+- [x] Crear `src/lib/api.ts`
+- [x] Crear/mejorar `src/lib/helpers.ts`
+- [x] Crear `src/lib/swr-config.ts`
+- [x] Verificar imports correctos
+- [x] ✅ **COMPLETADO**
 
 ### Issue 04: Hooks Personalizados ⏱️ 60 min
 - [ ] Crear `src/hooks/useGithubProjects.ts`
@@ -150,11 +150,11 @@ Usa este checklist para rastrear tu progreso mientras completas los issues.
 
 | Metrica | Objetivo | Actual |
 |---------|----------|--------|
-| Issues completados | 10 | 2 ✅ |
-| Componentes creados | 15+ | 0 |
+| Issues completados | 10 | 3 ✅ |
+| Componentes creados | 15+ | 11 ✅ |
 | Tipos definidos | 5+ | 5 ✅ |
 | Hooks creados | 5 | 0 |
-| Horas de trabajo | ~9.5 | 1 |
+| Horas de trabajo | ~9.5 | 2.5 |
 
 ---
 
