@@ -1,13 +1,14 @@
 /**
- * Tarjeta de carpeta (FolderCard) - Estilo TaskFlow
+ * Tarjeta de carpeta (FolderCard) - Estilo TaskFlow Minimalista
  * Issue 12 - Rediseño UI Moderno
  *
  * Características:
- * - Diseño limpio y minimalista
- * - Ícono de color en esquina superior
- * - Nombre y contador en el medio
- * - Fecha y botón más en la parte inferior
- * - Efecto hover suave
+ * - Layout horizontal limpio
+ * - Ícono pequeño y redondeado a la izquierda
+ * - Nombre de carpeta junto al ícono
+ * - Fecha abajo a la izquierda
+ * - Botón más arriba a la derecha
+ * - Diseño muy minimalista
  */
 
 import { Tag } from '@/types'
@@ -16,74 +17,60 @@ import { Button } from '@/components/ui/button'
 
 interface FolderCardProps {
   tag: Tag
-  projectCount: number
   onSelect: () => void
   isSelected: boolean
 }
 
 export const FolderCard = ({
   tag,
-  projectCount,
   onSelect,
   isSelected,
 }: FolderCardProps) => {
   return (
     <button
       onClick={onSelect}
-      className={`group relative overflow-hidden rounded-xl p-5 min-h-[140px]
-                  transition-all duration-300 text-left
-                  flex flex-col justify-between
+      className={`group relative w-full px-5 py-4 rounded-lg
+                  transition-all duration-200 text-left
+                  flex items-start justify-between
                   ${
                     isSelected
-                      ? 'bg-gradient-to-br from-primary/10 to-primary/5 border-primary/30 shadow-md'
-                      : 'bg-card/50 border border-border/30 hover:border-border/50 hover:shadow-lg hover:bg-card'
-                  }
-                  backdrop-blur-sm`}
+                      ? 'bg-muted/40 border border-primary/20'
+                      : 'bg-background/40 border border-border/30 hover:bg-muted/30 hover:border-border/50'
+                  }`}
     >
-      {/* Top Section - Icon + Title */}
-      <div className="space-y-3">
-        {/* Icon in colored square */}
+      {/* Left Section - Icon + Title + Date */}
+      <div className="flex items-start gap-3 flex-1 min-w-0">
+        {/* Icon in colored rounded square */}
         <div
-          className="w-10 h-10 rounded-lg flex items-center justify-center
-                     group-hover:scale-110 transition-transform duration-300 flex-shrink-0"
+          className="w-8 h-8 rounded-md flex items-center justify-center
+                     flex-shrink-0 group-hover:scale-110 transition-transform duration-300"
           style={{ backgroundColor: tag.color }}
         >
-          <Folder className="w-5 h-5 text-white" />
+          <Folder className="w-4 h-4 text-white" />
         </div>
 
-        {/* Title and Count */}
-        <div>
-          <h3 className="font-semibold text-foreground text-sm line-clamp-2 group-hover:text-primary transition-colors">
+        {/* Title and Meta */}
+        <div className="flex-1 min-w-0">
+          <h3 className="font-semibold text-foreground text-sm truncate group-hover:text-primary transition-colors">
             {tag.name}
           </h3>
-          <p className="text-xs text-muted-foreground mt-1">
-            {projectCount} proyecto{projectCount !== 1 ? 's' : ''}
+          <p className="text-xs text-muted-foreground mt-2">
+            Apr 2, 2023
           </p>
         </div>
       </div>
 
-      {/* Bottom Section - Date + More Button */}
-      <div className="flex items-center justify-between pt-3 border-t border-border/10 mt-2">
-        <span className="text-xs text-muted-foreground">Apr 2, 2025</span>
-        <Button
-          variant="ghost"
-          size="sm"
-          className="h-5 w-5 p-0 opacity-0 group-hover:opacity-100 transition-opacity hover:bg-muted/40"
-          onClick={(e) => {
-            e.stopPropagation()
-          }}
-        >
-          <MoreVertical className="w-4 h-4 text-muted-foreground" />
-        </Button>
-      </div>
-
-      {/* Subtle background gradient on hover */}
-      <div
-        className="absolute inset-0 opacity-0 group-hover:opacity-5 transition-opacity duration-300 -z-10 pointer-events-none"
-        style={{
-          background: `linear-gradient(135deg, ${tag.color}, ${tag.color}99)`,
+      {/* Right Section - More Button */}
+      <Button
+        variant="ghost"
+        size="sm"
+        className="h-5 w-5 p-0 ml-2 flex-shrink-0 opacity-60 group-hover:opacity-100 transition-opacity hover:bg-muted/40"
+        onClick={(e) => {
+          e.stopPropagation()
         }}
-      />
+      >
+        <MoreVertical className="w-3.5 h-3.5 text-muted-foreground" />
+      </Button>
     </button>
   )
 }

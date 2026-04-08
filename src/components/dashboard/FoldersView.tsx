@@ -126,11 +126,10 @@ export const FoldersView = ({
             📁 Folders
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {filteredTags.map(([tag, tagProjects]: [Tag, Project[]]) => (
+            {filteredTags.map(([tag]: [Tag, Project[]]) => (
               <FolderCard
                 key={tag.id}
                 tag={tag}
-                projectCount={tagProjects.length}
                 onSelect={() => toggleFolder(tag.id)}
                 isSelected={expandedFolders.has(tag.id)}
               />
