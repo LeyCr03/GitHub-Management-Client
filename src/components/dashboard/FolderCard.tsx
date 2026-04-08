@@ -1,18 +1,5 @@
-/**
- * Tarjeta de carpeta (FolderCard) - SVG Folder con contenido dentro
- * Issue 12 - Rediseño UI Moderno
- *
- * Características:
- * - Card completa como SVG con outline (stroke)
- * - Contenido (nombre, fecha) dentro del SVG
- * - Ícono de carpeta en la esquina superior izquierda
- * - Botón más arriba a la derecha
- * - Diseño elegante y minimalista
- */
 
 import { Tag } from '@/types'
-import { MoreVertical } from 'lucide-react'
-import { Button } from '@/components/ui/button'
 
 interface FolderCardProps {
   tag: Tag
@@ -78,18 +65,18 @@ export const FolderCard = ({
 
         {/* Ícono de carpeta (pequeño cuadrado redondeado en esquina superior) */}
         <rect
-          x="30"
-          y="45"
-          width="22"
-          height="22"
-          rx="4"
+          x="90"
+          y="40"
+          width="16"
+          height="16"
+          rx="8"
           fill={tag.color}
         />
 
         {/* Nombre de la carpeta */}
         <text
-          x="65"
-          y="65"
+          x="120"
+          y="55"
           className="folder-title"
           color="#000"
         >
@@ -98,7 +85,7 @@ export const FolderCard = ({
 
         {/* Fecha */}
         <text
-          x="30"
+          x="35"
           y="165"
           className="folder-date"
           color="#666"
@@ -108,16 +95,7 @@ export const FolderCard = ({
       </svg>
 
       {/* Right Section - More Button (fuera del SVG) */}
-      <Button
-        variant="ghost"
-        size="sm"
-        className="absolute top-2 right-2 h-5 w-5 p-0 opacity-60 group-hover:opacity-100 transition-opacity hover:bg-muted/40"
-        onClick={(e) => {
-          e.stopPropagation()
-        }}
-      >
-        <MoreVertical className="w-3.5 h-3.5" />
-      </Button>
+      
     </button>
   )
 }

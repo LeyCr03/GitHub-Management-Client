@@ -11,24 +11,25 @@
  * - Filtrado por tag seleccionado
  */
 
-import { useMemo, useState } from 'react'
+import { useMemo } from 'react'
 import { useGithubProjects } from '@/hooks'
 import { Project, Tag } from '@/types'
-import { ProjectCard } from './ProjectCard'
 import { FolderCard } from './FolderCard'
+import { FileCard } from './FileCard'
 import { Folder, FolderOpen } from 'lucide-react'
 
 interface FoldersViewProps {
   selectedTagId?: string | null
   onProjectSelect?: (projectId: string) => void
+  onFolderSelect?: (folderId: string) => void
 }
 
 export const FoldersView = ({
   selectedTagId,
   onProjectSelect,
+  onFolderSelect,
 }: FoldersViewProps) => {
   const { projects, tags, isLoading, isError } = useGithubProjects()
-  const [expandedFolders, setExpandedFolders] = useState<Set<string>>(new Set())
 
   const projectsByTag = useMemo(() => {
     if (!projects || !tags) return new Map()
@@ -62,20 +63,10 @@ export const FoldersView = ({
     return items.filter(([tag]) => tag.id === selectedTagId)
   }, [projectsByTag, selectedTagId])
 
-  const toggleFolder = (tagId: string) => {
-    const newExpanded = new Set(expandedFolders)
-    if (newExpanded.has(tagId)) {
-      newExpanded.delete(tagId)
-    } else {
-      newExpanded.add(tagId)
-    }
-    setExpandedFolders(newExpanded)
-  }
-
   if (isLoading) {
     return (
       <div className="flex items-center justify-center h-full">
-        <div className="text-muted-foreground">Cargando proyectos...</div>
+        <div className="text-muted-foreground">Loading projects...</div>
       </div>
     )
   }
@@ -83,7 +74,7 @@ export const FoldersView = ({
   if (isError) {
     return (
       <div className="flex items-center justify-center h-full">
-        <div className="text-destructive">Error al cargar proyectos</div>
+        <div className="text-destructive">Error loading files</div>
       </div>
     )
   }
@@ -92,9 +83,9 @@ export const FoldersView = ({
     return (
       <div className="flex flex-col items-center justify-center h-full text-center">
         <FolderOpen className="w-16 h-16 text-muted-foreground mb-4" />
-        <h2 className="text-xl font-semibold mb-2 text-foreground">No hay proyectos</h2>
+        <h2 className="text-xl font-semibold mb-2 text-foreground">No projects found</h2>
         <p className="text-muted-foreground">
-          Crea algunos tags y agrupa tus proyectos de GitHub
+          Create some tags and group your GitHub projects
         </p>
       </div>
     )
@@ -118,13 +109,13 @@ export const FoldersView = ({
           <h2 className="text-md text-foreground/70">
            <Folder className="w-4 h-4 inline-block mr-2" /> Folders
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {filteredTags.map(([tag]: [Tag, Project[]]) => (
               <FolderCard
                 key={tag.id}
                 tag={tag}
-                onSelect={() => toggleFolder(tag.id)}
-                isSelected={expandedFolders.has(tag.id)}
+                onSelect={() => onFolderSelect?.(tag.id)}
+                isSelected={false}
               />
             ))}
           </div>
@@ -132,36 +123,18 @@ export const FoldersView = ({
       )}
 
       {/* Latest Projects */}
-      {filteredTags.length > 0 && (
+      {projects && projects.length > 0 && (
         <div className="space-y-6">
           <h2 className="text-xl font-bold text-foreground">
             📌 Latest Projects
           </h2>
-          <div className="space-y-8">
-            {filteredTags.map(([tag, tagProjects]: [Tag, Project[]]) => (
-              expandedFolders.has(tag.id) && tagProjects.length > 0 && (
-                <div key={tag.id} className="space-y-4">
-                  <div className="flex items-center gap-3">
-                    <div
-                      className="w-4 h-4 rounded-full"
-                      style={{ backgroundColor: tag.color }}
-                    />
-                    <h3 className="font-semibold text-foreground">{tag.name}</h3>
-                    <span className="text-xs text-muted-foreground">
-                      ({tagProjects.length})
-                    </span>
-                  </div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {tagProjects.map((project) => (
-                      <ProjectCard
-                        key={project.id}
-                        project={project}
-                        onSelect={onProjectSelect}
-                      />
-                    ))}
-                  </div>
-                </div>
-              )
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {projects.slice(0, 12).map((project) => (
+              <FileCard
+                key={project.id}
+                project={project}
+                onSelect={onProjectSelect}
+              />
             ))}
           </div>
         </div>
