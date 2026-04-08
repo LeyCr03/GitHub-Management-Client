@@ -14,7 +14,7 @@
 import { useGithubProjects } from '@/hooks'
 import { Tag } from '@/types'
 import { Button } from '@/components/ui/button'
-import { Plus, Grid3x3, Home } from 'lucide-react'
+import { Plus, Home, Github } from 'lucide-react'
 import classNames from 'classnames'
 
 interface SidebarProps {
@@ -32,23 +32,26 @@ export const Sidebar = ({ onTagSelect, selectedTagId }: SidebarProps) => {
 
   if (isLoading) {
     return (
-      <aside className="w-72 bg-gradient-to-b from-background to-background/50 border-r border-border/40 p-6">
+      <aside className="w-72 bg-linear-to-b from-background to-background/50 border-r border-border/40 p-6">
         <div className="text-muted-foreground">Cargando...</div>
       </aside>
     )
   }
 
   return (
-    <aside className="w-72 bg-gradient-to-b from-background to-background/50 border-r border-border/40 p-6 overflow-y-auto">
+    <aside className="w-72 bg-linear-to-b from-background to-background/50 border-r border-border/40 p-6 overflow-y-auto">
       {/* Logo/Header */}
       <div className="mb-10">
         <div className="flex items-center gap-2 mb-2">
-          <div className="w-8 h-8 bg-gradient-to-br from-primary to-primary/60 rounded-lg flex items-center justify-center">
-            <Grid3x3 className="w-5 h-5 text-primary-foreground" />
+          <div className="w-10 h-10 bg-muted rounded-full flex items-center justify-center">
+            <Github className="w-5 h-5 text-primary-foreground" />
           </div>
-          <h1 className="text-xl font-bold text-foreground">GitHub Projects</h1>
+          <div className=''>
+            <h1 className="text-xl font-bold text-foreground">GitHub Admin</h1>
+            <p className="text-xs text-muted-foreground">Manage your repositories</p>
+
+          </div>
         </div>
-        <p className="text-xs text-muted-foreground">Gestiona tus repositorios</p>
       </div>
 
       {/* Overview Button */}
