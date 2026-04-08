@@ -3,6 +3,9 @@
 ## Objetivo
 Integrar todos los componentes, agregar validaciones, error handling y mejorar la UX.
 
+⚠️ **IMPORTANTE:** Este issue prepara la app para el Issue 11 (Integración con Servidor).
+No implementa la integración real del servidor, solo el polish y validaciones locales.
+
 ## Tareas
 
 ### 1. Configurar App.tsx completo

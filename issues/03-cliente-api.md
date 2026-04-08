@@ -209,3 +209,15 @@ export const fetcher = (url: string) =>
 - Los interceptores manejan autenticación automáticamente
 - Los métodos siguen patrón async/await
 - Todos los tipos están importados desde `@/types`
+
+## ⚠️ Nota Importante para Integración Servidor
+
+Este issue crea un cliente API **temporal** que será **actualizado en el Issue 11**.
+
+**Cambios que se harán en Issue 11:**
+- Cambiar `baseURL` a `http://localhost:3000` (sin `/api`)
+- Agregar `/api` prefix a todos los endpoints
+- Cambiar parámetro `projectId` → `ownerRepo` (formato owner/repo)
+- Agregar validación de formato en métodos
+
+Ahora solo implementa lo básico. El Issue 11 hará los ajustes finales para conectar con el servidor NestJS real.

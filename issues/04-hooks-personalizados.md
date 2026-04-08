@@ -257,3 +257,14 @@ export { useProjectCommits } from './useProjectCommits'
 - El caché de SWR se invalida automáticamente
 - Los errores se capturan y se exponen para mostrar al usuario
 - Usa `mutate()` para revalidar manualmente cuando sea necesario
+
+## ⚠️ Nota Importante para Integración Servidor
+
+Estos hooks serán **actualizados en el Issue 11** para usar el formato `owner/repo` en lugar de `projectId`.
+
+**Cambios que se harán en Issue 11:**
+- Cambiar parámetro `projectId` → `ownerRepo` en todos los hooks
+- Agregar validación de formato `owner/repo` en los hooks
+- Asegurarse que el SWR cache use la nueva clave
+
+Por ahora, implementa los hooks tal como están especificados. El Issue 11 hará los ajustes necesarios.

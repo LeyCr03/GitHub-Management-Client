@@ -287,3 +287,14 @@ export default App
 - Los stats se abrevian (1000 → 1k)
 - Las tarjetas tienen hover effects
 - El diseño sigue el patrón del mockup (TaskFlow)
+
+## ⚠️ Nota Importante para Integración Servidor (Issue 11)
+
+Este componente será **actualizado en el Issue 11** para pasar `owner/repo` en lugar de `projectId`.
+
+**Cambios que se harán en Issue 11:**
+- Cambiar `onSelect` para pasar `owner/repo` en lugar de `projectId`
+- Crear helper para convertir `project.url` a `owner/repo`
+- Actualizar `ProjectDetailModal` para recibir `owner/repo`
+
+Por ahora, implementa tal como está especificado.

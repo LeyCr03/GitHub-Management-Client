@@ -51,3 +51,4 @@ export {
 } from './select'
 export { Label } from './label'
 export { Popover, PopoverTrigger, PopoverContent } from './popover'
+export { Code } from './code'

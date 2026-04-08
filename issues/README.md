@@ -16,8 +16,9 @@ Este directorio contiene todos los pasos necesarios para completar el proyecto d
 | 08 | [Tags Editor](./08-tags-editor.md) | Modal para crear/editar tags | 75 min |
 | 09 | [Componentes UI](./09-componentes-ui.md) | Card, Dialog, Tabs, Badge, Input | 60 min |
 | 10 | [Integración Final](./10-integracion-final.md) | Polish, validaciones, error handling | 75 min |
+| 11 | [Integración Servidor](./11-integracion-servidor.md) | **🔴 CRÍTICO** - Conectar con API NestJS real | 120-180 min |
 
-**⏱️ Tiempo Total Estimado: ~9.5 horas**
+**⏱️ Tiempo Total Estimado: ~13 horas** (Incluye Issue 11)
 
 ---
 
@@ -26,8 +27,11 @@ Este directorio contiene todos los pasos necesarios para completar el proyecto d
 Se recomienda seguir el orden numérico ya que cada issue construye sobre los anteriores:
 
 ```
-Setup → Tipos → API → Hooks → Layout → Dashboard → Detail → Tags → UI → Integración
+Setup → Tipos → API → Hooks → Layout → Dashboard → Detail → Tags → UI → Integración Final → Integración Servidor
 ```
+
+**⚠️ IMPORTANTE:** El Issue 11 (Integración Servidor) es CRÍTICO y debe hacerse después del Issue 10.
+Sin él, el cliente no funciona con la API real del servidor.
 
 ### Orden Alternativo (Opcional)
 Si prefieres trabajar en paralelo:
@@ -139,12 +143,19 @@ Use este checklist para rastrear el progreso:
 - [ ] Issue 07 completado
 - [ ] Issue 08 completado
 
-### Finalización
+### Finalización Frontend
 - [ ] Issue 10 completado
 - [ ] Todos los tests pasen
 - [ ] No hay errores en consola
 - [ ] Responsive en mobile/tablet/desktop
 - [ ] Performance OK (Lighthouse > 80)
+
+### Integración Servidor (CRÍTICO)
+- [ ] Issue 11 completado
+- [ ] Cliente conecta al servidor
+- [ ] Login OAuth funciona
+- [ ] Proyectos cargan desde servidor
+- [ ] Todos los endpoints funcionan
 
 ---
 
