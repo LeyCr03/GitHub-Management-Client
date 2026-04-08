@@ -1,139 +1,191 @@
 # GitHub Dashboard - Guía de Desarrollo
 
-## 📚 Comenzar
+## Setup
 
-1. **Leer el roadmap**: Abre `/issues/README.md`
-2. **Seguir en orden**: Completa cada issue numerado (01-10)
-3. **Verificar progreso**: Usa el checklist del roadmap
+1. Clonar repositorio
+2. Instalar dependencias: `pnpm install`
+3. Crear `.env.local` desde `.env.example`
+4. Ejecutar: `pnpm dev`
 
-## 🗂️ Estructura
+## Estructura del Proyecto
 
 ```
 src/
-├── components/    # Componentes React (layout, dashboard, project, ui)
-├── hooks/         # Custom hooks reutilizables
-├── types/         # Definiciones TypeScript
-├── lib/           # Utilidades, API client, helpers
-├── constants/     # Constantes (colores, etc)
-├── pages/         # Páginas principales
-└── stores/        # Estado global (Zustand - futuro)
+├── components/          # Componentes React
+│   ├── layout/         # Componentes de layout
+│   ├── dashboard/      # Componentes del dashboard
+│   ├── project/        # Componentes de proyectos
+│   ├── ui/            # Componentes UI reutilizables
+│   └── ErrorBoundary.tsx
+├── hooks/              # Custom hooks
+├── types/              # Definiciones TypeScript
+├── lib/               # Utilidades y helpers
+│   ├── api.ts         # Cliente API
+│   ├── toast.ts       # Notificaciones
+│   └── ...
+├── stores/            # Estado global (Zustand)
+├── pages/             # Páginas/vistas principales
+├── App.tsx            # Componente raíz
+└── main.tsx           # Punto de entrada
 ```
 
-## 🚀 Comandos Útiles
+## Flujo de Datos
+
+```
+API Server → axios instance → hooks (SWR) → components
+                                    ↓
+                             React state/Context
+```
+
+## Convenciones
+
+- **Components**: PascalCase (`ProjectCard.tsx`)
+- **Hooks**: `useXxx` (`useGithubProjects.ts`)
+- **Files**: camelCase o PascalCase (components)
+- **Types**: PascalCase con interfaz (`interface ProjectCardProps`)
+
+## Scripts Disponibles
 
 ```bash
+# Desarrollo
+pnpm dev                # Ejecutar servidor de desarrollo
+pnpm build             # Compilar para producción
+pnpm lint              # Validar código con ESLint
+pnpm preview           # Vista previa de build
+
 # Instalar dependencias
-pnpm install
-
-# Desarrollo local
-pnpm dev
-
-# Build para producción
-pnpm build
-
-# Preview build
-pnpm preview
-
-# Linting
-pnpm lint
-
-# Verificar tipos
-pnpm tsc --noEmit
+pnpm add <package>     # Instalar paquete
+pnpm add -D <package>  # Instalar como dev dependency
 ```
 
-## 📋 Issues y Tareas
+## Herramientas y Librerías
 
-Todos los issues están en la carpeta `/issues/`:
+- **React 19**: Framework principal
+- **TypeScript**: Tipado estático
+- **Tailwind CSS 4**: Estilos
+- **Vite**: Build tool
+- **SWR**: Data fetching
+- **Zustand**: State management
+- **Axios**: HTTP client
+- **Sonner**: Toast notifications
+- **Lucide React**: Iconos
+- **Radix UI**: Componentes primitivos
 
-| Issue | Título | Tiempo |
-|-------|--------|--------|
-| 01 | Setup Inicial | 30 min |
-| 02 | Tipos TypeScript | 45 min |
-| 03 | Cliente API | 45 min |
-| 04 | Hooks Personalizados | 60 min |
-| 05 | Componentes Layout | 60 min |
-| 06 | Dashboard y FoldersView | 90 min |
-| 07 | Project Detail | 120 min |
-| 08 | Tags Editor | 75 min |
-| 09 | Componentes UI | 60 min |
-| 10 | Integración Final | 75 min |
+## Patrón de Componentes
 
-## 🔧 Stack Técnico
+### Componente Funcional Típico
 
-- **React 19** + **TypeScript**
-- **Vite** (bundler)
-- **Tailwind CSS** (estilos)
-- **Radix UI** (componentes base)
-- **SWR** (data fetching)
-- **Zustand** (state management)
-- **Axios** (HTTP client)
-- **Sonner** (toasts)
+```typescript
+interface MyComponentProps {
+  title: string
+  onAction?: (data: string) => void
+}
 
-## 💡 Tips Importantes
+export const MyComponent = ({ title, onAction }: MyComponentProps) => {
+  const [state, setState] = useState<string>('')
 
-### Mientras trabajas en cada issue:
+  const handleClick = () => {
+    onAction?.(state)
+  }
 
-1. **Lee el issue completo** antes de empezar
-2. **Crea los archivos** en las rutas especificadas
-3. **Sigue el código exactamente** - los detalles importan
-4. **Verifica TypeScript**: `pnpm tsc --noEmit`
-5. **Prueba en el navegador**: `pnpm dev`
-6. **Commit frecuentemente** después de cada issue
+  return (
+    <div>
+      <h1>{title}</h1>
+      <button onClick={handleClick}>Action</button>
+    </div>
+  )
+}
+```
 
-### Troubleshooting:
+## Patrón de Hooks
 
-- **Errores de import**: Verifica rutas (usa `@/` para src)
-- **TypeScript errors**: Lee el error, suele indicar el problema
-- **Estilos no aplican**: Verifica que Tailwind esté configurado
-- **API no responde**: Verifica que el servidor backend corra
+### Custom Hook Típico
 
-## 🔐 Configuración
+```typescript
+interface UseMyHookReturn {
+  data: Data | null
+  isLoading: boolean
+  error: string | null
+}
 
-1. Copia `.env.example` a `.env.local`
-2. Actualiza los valores según tu setup
-3. **No commites `.env.local`**
+export const useMyHook = (): UseMyHookReturn => {
+  const [data, setData] = useState<Data | null>(null)
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+
+  const fetchData = async () => {
+    setIsLoading(true)
+    setError(null)
+    try {
+      const response = await api.getData()
+      setData(response)
+    } catch (err) {
+      setError('Error al cargar datos')
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    fetchData()
+  }, [])
+
+  return { data, isLoading, error }
+}
+```
+
+## Notificaciones (Toast)
+
+Usar la librería `sonner` para mostrar notificaciones:
+
+```typescript
+import { showSuccess, showError, showLoading, updateToast } from '@/lib/toast'
+
+// Éxito
+showSuccess('Guardado correctamente')
+
+// Error
+showError('Error al guardar')
+
+// Con carga
+const toastId = showLoading('Guardando...')
+// ... hacer algo ...
+updateToast(toastId, 'Guardado correctamente', 'success')
+```
+
+## Error Handling
+
+La aplicación incluye un `ErrorBoundary` que captura errores no manejados. Los errores de la API se manejan en los hooks y se muestran como toasts.
+
+## Estilos CSS
+
+- Usar Tailwind CSS clases
+- Colores definidos en variables CSS en `index.css`
+- Animaciones personalizadas disponibles: `animate-fade-in`, `animate-slide-up`
+- Clase `.prose` para contenido markdown
+
+## Testing
 
 ```bash
-cp .env.example .env.local
+pnpm test           # Ejecutar tests
+pnpm test:watch    # Modo watch
 ```
 
-## 📊 Progreso
+## Build y Deploy
 
-Marca tu progreso en el [roadmap de issues](./issues/README.md):
+Ver guía en `DEPLOYMENT.md` (futuro)
 
-- [x] Issue 01 completado
-- [ ] Issue 02 en progreso...
-- [ ] Issue 03 próximo
+## Debugging
 
-## 🎯 Objetivos
+- Usar DevTools de React
+- Console logging con `console.log`, `console.error`
+- Verificar red en DevTools → Network
+- Validar tipos con `tsc --noEmit`
 
-El proyecto implementa un dashboard para gestionar proyectos GitHub:
+## Próximos Pasos
 
-✅ Organizar proyectos por tags (folders)  
-✅ Ver detalles: README, commits, imágenes  
-✅ Crear/editar tags desde el dashboard  
-✅ UI moderna con Tailwind + shadcn  
-✅ Integración con tu API backend  
-
-## 📞 Ayuda
-
-Si encuentras problemas:
-
-1. **Revisa el issue** - probablemente tenga la solución
-2. **Verifica la consola del navegador** - busca errores
-3. **Compara tu código** con el del issue
-4. **Consulta la documentación**:
-   - [React Docs](https://react.dev)
-   - [TypeScript Docs](https://www.typescriptlang.org/)
-   - [Tailwind Docs](https://tailwindcss.com/)
-
-## 📝 Notas
-
-- El proyecto usa **componentes funcionales** con hooks
-- Los tipos están en `/src/types/` - úsalos siempre
-- El API client está centralizado en `/src/lib/api.ts`
-- Los componentes del layout están en `/src/components/layout/`
-
----
-
-**¿Listo para empezar? → Abre `/issues/01-setup-inicial.md`**
+- Tests unitarios con Vitest
+- E2E tests con Cypress
+- Performance optimization
+- PWA features
+- Internacionalización (i18n)

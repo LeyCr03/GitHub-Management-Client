@@ -17,9 +17,13 @@ import { FolderOpen } from 'lucide-react'
 
 interface FoldersViewProps {
   selectedTagId?: string | null
+  onProjectSelect?: (projectId: string) => void
 }
 
-export const FoldersView = ({ selectedTagId }: FoldersViewProps) => {
+export const FoldersView = ({
+  selectedTagId,
+  onProjectSelect,
+}: FoldersViewProps) => {
   const { projects, tags, isLoading, isError } = useGithubProjects()
   const [expandedFolders, setExpandedFolders] = useState<Set<string>>(new Set())
 
@@ -102,7 +106,7 @@ export const FoldersView = ({ selectedTagId }: FoldersViewProps) => {
 
   return (
     <div className="space-y-8 p-6">
-      {filteredTags.map(([tag, tagProjects]) => (
+      {filteredTags.map(([tag, tagProjects]: [Tag, Project[]]) => (
         <div key={tag.id}>
           {/* Folder Header */}
           <button
@@ -131,6 +135,7 @@ export const FoldersView = ({ selectedTagId }: FoldersViewProps) => {
                 <ProjectCard
                   key={project.id}
                   project={project}
+                  onSelect={onProjectSelect}
                 />
               ))}
             </div>

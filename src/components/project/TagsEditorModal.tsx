@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useTagManagement, useGithubProjects } from '@/hooks'
 import { useTagValidation } from '@/hooks/useTagValidation'
+import { showSuccess, showError, showLoading, updateToast } from '@/lib/toast'
 import { Tag } from '@/types'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
@@ -57,6 +58,7 @@ export const TagsEditorModal = ({
     const nameValidation = validateTagName(newTagName)
     if (!nameValidation.valid) {
       setNameError(nameValidation.error || 'Error en validación')
+      showError(nameValidation.error || 'Error al validar nombre del tag')
       return
     }
     setNameError(null)
@@ -65,6 +67,7 @@ export const TagsEditorModal = ({
     const colorValidation = validateColor(newTagColor)
     if (!colorValidation.valid) {
       setColorError(colorValidation.error || 'Error en validación')
+      showError(colorValidation.error || 'Error al validar color del tag')
       return
     }
     setColorError(null)
@@ -73,6 +76,7 @@ export const TagsEditorModal = ({
     const countValidation = validateTagsCount(selectedTags.length + 1, 10)
     if (!countValidation.valid) {
       setNameError(countValidation.error || 'Error en validación')
+      showError(countValidation.error || 'Error al validar cantidad de tags')
       return
     }
 
@@ -85,14 +89,21 @@ export const TagsEditorModal = ({
       setShowCreateForm(false)
       setNameError(null)
       setColorError(null)
+      showSuccess(`Tag "${createdTag.name}" creado correctamente`)
+    } else {
+      showError('Error al crear el tag')
     }
   }
 
   const handleSave = async () => {
+    const toastId = showLoading('Actualizando tags...')
     const success = await updateProjectTags(projectId, selectedTags)
     if (success) {
+      updateToast(toastId, 'Tags actualizados correctamente', 'success')
       onSave?.(selectedTags)
       onOpenChange(false)
+    } else {
+      updateToast(toastId, 'Error al actualizar tags', 'error')
     }
   }
 

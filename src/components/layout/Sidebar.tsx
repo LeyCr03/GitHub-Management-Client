@@ -9,7 +9,6 @@
  * - Botón para crear nuevo tag
  */
 
-import { useState } from 'react'
 import { useGithubProjects } from '@/hooks'
 import { Tag } from '@/types'
 import { Button } from '@/components/ui/button'
@@ -23,17 +22,6 @@ interface SidebarProps {
 
 export const Sidebar = ({ onTagSelect, selectedTagId }: SidebarProps) => {
   const { tags, isLoading } = useGithubProjects()
-  const [expandedFolders, setExpandedFolders] = useState<Set<string>>(new Set())
-
-  const toggleFolder = (tagId: string) => {
-    const newExpanded = new Set(expandedFolders)
-    if (newExpanded.has(tagId)) {
-      newExpanded.delete(tagId)
-    } else {
-      newExpanded.add(tagId)
-    }
-    setExpandedFolders(newExpanded)
-  }
 
   if (isLoading) {
     return (

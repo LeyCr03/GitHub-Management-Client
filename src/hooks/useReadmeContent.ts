@@ -30,7 +30,7 @@ export const useReadmeContent = (projectId?: string): UseReadmeContentReturn => 
   const { data, error, isLoading } = useSWR(
     projectId ? ['readme', projectId] : null,
     async () => {
-      if (!projectId) return null
+      if (!projectId) return undefined
       return await api.getReadmeContent(projectId)
     },
     {

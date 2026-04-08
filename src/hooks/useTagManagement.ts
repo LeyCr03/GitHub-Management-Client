@@ -38,8 +38,29 @@ export const useTagManagement = (): UseTagManagementReturn => {
 
   /**
    * Crea un nuevo tag
+   * Validaciones:
+   * - nombre no puede estar vacío
+   * - nombre máximo 50 caracteres
+   * - color debe ser un hex válido (#RRGGBB)
    */
   const createTag = async (name: string, color: string): Promise<Tag | null> => {
+    // Validar input
+    if (!name.trim()) {
+      setError('El nombre del tag es requerido')
+      return null
+    }
+
+    if (name.length > 50) {
+      setError('El nombre debe tener máximo 50 caracteres')
+      return null
+    }
+
+    const colorRegex = /^#[0-9A-F]{6}$/i
+    if (!colorRegex.test(color)) {
+      setError('El color debe ser un código hex válido (#RRGGBB)')
+      return null
+    }
+
     setIsLoading(true)
     setError(null)
     try {
