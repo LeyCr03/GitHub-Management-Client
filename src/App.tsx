@@ -1,14 +1,14 @@
 
+/**
+ * Componente raíz de la aplicación
+ * Issue 06 - Dashboard y FoldersView
+ */
 
+import { DashboardPage } from '@/pages/Dashboard'
+import '@/index.css'
 
 function App() {
-  
-
-  return (
-    <div className="min-h-full bg-background p-8">
-      hola
-    </div>
-  );
+  return <DashboardPage />
 }
 
-export default App;
+export default App

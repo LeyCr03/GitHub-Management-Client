@@ -4,8 +4,8 @@ Usa este checklist para rastrear tu progreso mientras completas los issues.
 
 ## 📊 Progress General
 
-**Issues Completados:** 5/10  
-**Progreso:** 50%
+**Issues Completados:** 6/10  
+**Progreso:** 60%
 
 ---
 
@@ -56,13 +56,13 @@ Usa este checklist para rastrear tu progreso mientras completas los issues.
 - [x] ✅ **COMPLETADO**
 
 ### Issue 06: Dashboard y FoldersView ⏱️ 90 min
-- [ ] Crear `src/components/dashboard/FoldersView.tsx`
-- [ ] Crear `src/components/dashboard/ProjectCard.tsx`
-- [ ] Actualizar `src/pages/Dashboard.tsx`
-- [ ] Actualizar `src/App.tsx`
-- [ ] Verificar grid y cards
-- [ ] Verificar lazy loading de imágenes
-- [ ] ✅ **COMPLETADO**
+- [x] Crear `src/components/dashboard/FoldersView.tsx`
+- [x] Crear `src/components/dashboard/ProjectCard.tsx`
+- [x] Actualizar `src/pages/Dashboard.tsx`
+- [x] Actualizar `src/App.tsx`
+- [x] Verificar grid y cards
+- [x] Verificar lazy loading de imágenes
+- [x] ✅ **COMPLETADO**
 
 ### Issue 07: Project Detail ⏱️ 120 min
 - [ ] Crear `src/components/project/ProjectDetailModal.tsx`
@@ -150,11 +150,11 @@ Usa este checklist para rastrear tu progreso mientras completas los issues.
 
 | Metrica | Objetivo | Actual |
 |---------|----------|--------|
-| Issues completados | 10 | 5 ✅ |
-| Componentes creados | 15+ | 14 ✅ |
+| Issues completados | 10 | 6 ✅ |
+| Componentes creados | 15+ | 16 ✅ |
 | Tipos definidos | 5+ | 5 ✅ |
 | Hooks creados | 5 | 5 ✅ |
-| Horas de trabajo | ~9.5 | 4.5 |
+| Horas de trabajo | ~9.5 | 5.5 |
 
 ---
 
