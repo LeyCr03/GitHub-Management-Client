@@ -12,7 +12,7 @@ import { ColorPicker } from './ColorPicker'
 import { TagSearchFilter } from './TagSearchFilter'
 
 interface TagsEditorModalProps {
-  projectId: string
+  ownerRepo: string
   currentTags: Tag[]
   open: boolean
   onOpenChange: (open: boolean) => void
@@ -22,9 +22,10 @@ interface TagsEditorModalProps {
 /**
  * Modal para editar tags de un proyecto
  * Permite seleccionar tags existentes, crear nuevos, y validar datos
+ * Issue 11 - Integración con Servidor NestJS
  */
 export const TagsEditorModal = ({
-  projectId,
+  ownerRepo,
   currentTags,
   open,
   onOpenChange,
@@ -97,7 +98,7 @@ export const TagsEditorModal = ({
 
   const handleSave = async () => {
     const toastId = showLoading('Actualizando tags...')
-    const success = await updateProjectTags(projectId, selectedTags)
+    const success = await updateProjectTags(ownerRepo, selectedTags)
     if (success) {
       updateToast(toastId, 'Tags actualizados correctamente', 'success')
       onSave?.(selectedTags)

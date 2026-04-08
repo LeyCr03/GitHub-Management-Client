@@ -18,24 +18,24 @@ interface UseProjectCommitsReturn {
 
 /**
  * Hook para obtener commits de un proyecto
- * Solo hace fetch si projectId es válido
+ * Solo hace fetch si ownerRepo es válido (formato owner/repo)
  *
- * @param projectId - ID del proyecto (opcional)
+ * @param ownerRepo - Proyecto en formato owner/repo (ej: "anthropics/claude-code")
  * @param limit - Cantidad de commits a obtener (default 10)
  * @returns Objeto con commits, loading e isError
  *
  * @example
- * const { commits, isLoading } = useProjectCommits('project-id', 5)
+ * const { commits, isLoading } = useProjectCommits('anthropics/claude-code', 5)
  */
 export const useProjectCommits = (
-  projectId?: string,
+  ownerRepo?: string,
   limit: number = 10
 ): UseProjectCommitsReturn => {
   const { data, error, isLoading } = useSWR(
-    projectId ? ['commits', projectId] : null,
+    ownerRepo && ownerRepo.includes('/') ? ['commits', ownerRepo] : null,
     async () => {
-      if (!projectId) return null
-      return await api.getProjectCommits(projectId, limit)
+      if (!ownerRepo || !ownerRepo.includes('/')) return null
+      return await api.getProjectCommits(ownerRepo, limit)
     },
     {
       revalidateOnFocus: false,

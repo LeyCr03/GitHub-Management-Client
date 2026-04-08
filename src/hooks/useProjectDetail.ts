@@ -22,20 +22,21 @@ interface UseProjectDetailReturn {
 
 /**
  * Hook para obtener detalles completos de un proyecto
- * Solo hace fetch si projectId es válido
+ * Solo hace fetch si ownerRepo es válido (formato owner/repo)
  *
- * @param projectId - ID del proyecto a cargar
+ * @param ownerRepo - Proyecto en formato owner/repo (ej: "anthropics/claude-code")
  * @returns Objeto con proyecto, loading, error y función mutate
  *
  * @example
- * const { project, isLoading } = useProjectDetail('project-id')
+ * const { project, isLoading } = useProjectDetail('anthropics/claude-code')
  */
-export const useProjectDetail = (projectId: string): UseProjectDetailReturn => {
+export const useProjectDetail = (ownerRepo: string): UseProjectDetailReturn => {
   const { data, error, mutate, isLoading } = useSWR(
-    projectId ? ['project', projectId] : null,
+    // Validar formato owner/repo
+    ownerRepo && ownerRepo.includes('/') ? ['project', ownerRepo] : null,
     async () => {
-      if (!projectId) return null
-      const response = await api.getProjectDetail(projectId)
+      if (!ownerRepo || !ownerRepo.includes('/')) return null
+      const response = await api.getProjectDetail(ownerRepo)
       return response.project
     },
     {

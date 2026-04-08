@@ -28,15 +28,19 @@ class GitHubDashboardAPI {
    */
   async getProjects(filterTag?: string): Promise<GetProjectsResponse> {
     const params = filterTag ? { tag: filterTag } : {}
-    const response = await axios.get<GetProjectsResponse>('/projects', { params })
+    const response = await axios.get<GetProjectsResponse>('/api/projects', { params })
     return response.data
   }
 
   /**
    * Obtiene detalles completos de un proyecto
+   * @param ownerRepo Formato: "owner/repo" (ej: "anthropics/claude-code")
    */
-  async getProjectDetail(projectId: string): Promise<GetProjectDetailResponse> {
-    const response = await axios.get<GetProjectDetailResponse>(`/projects/${projectId}`)
+  async getProjectDetail(ownerRepo: string): Promise<GetProjectDetailResponse> {
+    if (!ownerRepo.includes('/')) {
+      throw new Error('projectId debe estar en formato owner/repo')
+    }
+    const response = await axios.get<GetProjectDetailResponse>(`/api/projects/${ownerRepo}`)
     return response.data
   }
 
@@ -46,7 +50,7 @@ class GitHubDashboardAPI {
    * Obtiene todos los tags disponibles
    */
   async getTags() {
-    const response = await axios.get<ApiResponse<any>>('/tags')
+    const response = await axios.get<ApiResponse<any>>('/api/tags')
     return response.data.data
   }
 
@@ -54,20 +58,24 @@ class GitHubDashboardAPI {
    * Crea un nuevo tag
    */
   async createTag(tagData: CreateTagRequest): Promise<CreateTagResponse> {
-    const response = await axios.post<CreateTagResponse>('/tags', tagData)
+    const response = await axios.post<CreateTagResponse>('/api/tags', tagData)
     return response.data
   }
 
   /**
    * Actualiza los tags de un proyecto
+   * @param ownerRepo Formato: "owner/repo"
    */
   async updateProjectTags(
-    projectId: string,
+    ownerRepo: string,
     tagIds: string[]
   ): Promise<UpdateProjectTagsResponse> {
+    if (!ownerRepo.includes('/')) {
+      throw new Error('projectId debe estar en formato owner/repo')
+    }
     const payload: UpdateProjectTagsRequest = { tags: tagIds }
     const response = await axios.patch<UpdateProjectTagsResponse>(
-      `/projects/${projectId}/tags`,
+      `/api/projects/${ownerRepo}/tags`,
       payload
     )
     return response.data
@@ -77,17 +85,21 @@ class GitHubDashboardAPI {
    * Elimina un tag
    */
   async deleteTag(tagId: string): Promise<void> {
-    await axios.delete(`/tags/${tagId}`)
+    await axios.delete(`/api/tags/${tagId}`)
   }
 
   // ===== README =====
 
   /**
    * Obtiene el contenido del README en markdown
+   * @param ownerRepo Formato: "owner/repo"
    */
-  async getReadmeContent(projectId: string): Promise<string> {
+  async getReadmeContent(ownerRepo: string): Promise<string> {
+    if (!ownerRepo.includes('/')) {
+      throw new Error('projectId debe estar en formato owner/repo')
+    }
     const response = await axios.get<{ content: string }>(
-      `/projects/${projectId}/readme`
+      `/api/projects/${ownerRepo}/readme`
     )
     return response.data.content
   }
@@ -95,10 +107,14 @@ class GitHubDashboardAPI {
   // ===== COMMITS =====
 
   /**
-   * Obtiene commits de un proyecto con límite configurado
+   * Obtiene commits de un proyecto con límite configurable
+   * @param ownerRepo Formato: "owner/repo"
    */
-  async getProjectCommits(projectId: string, limit: number = 10) {
-    const response = await axios.get(`/projects/${projectId}/commits`, {
+  async getProjectCommits(ownerRepo: string, limit: number = 10) {
+    if (!ownerRepo.includes('/')) {
+      throw new Error('projectId debe estar en formato owner/repo')
+    }
+    const response = await axios.get(`/api/projects/${ownerRepo}/commits`, {
       params: { limit },
     })
     return response.data

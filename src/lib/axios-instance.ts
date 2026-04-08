@@ -10,7 +10,7 @@
 import axios from 'axios'
 
 const instance = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000/api',
+  baseURL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000',
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json',
@@ -31,14 +31,15 @@ instance.interceptors.request.use((config) => {
 
 /**
  * Interceptor de response
- * Maneja errores y limpia token si es inválido
+ * Maneja errores de autenticación
  */
 instance.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      // Token inválido o expirado, limpiar localStorage
+      // Token inválido o expirado
       localStorage.removeItem('auth_token')
+      localStorage.removeItem('user_username')
       // Opcional: redirigir a login
       // window.location.href = '/login'
     }

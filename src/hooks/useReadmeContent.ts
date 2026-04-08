@@ -17,21 +17,21 @@ interface UseReadmeContentReturn {
 
 /**
  * Hook para obtener contenido markdown del README
- * Solo hace fetch si projectId es válido
+ * Solo hace fetch si ownerRepo es válido (formato owner/repo)
  * Cache de 5 minutos (no se revalida frecuentemente)
  *
- * @param projectId - ID del proyecto (opcional)
+ * @param ownerRepo - Proyecto en formato owner/repo (ej: "anthropics/claude-code")
  * @returns Objeto con contenido, loading e isError
  *
  * @example
- * const { content, isLoading } = useReadmeContent('project-id')
+ * const { content, isLoading } = useReadmeContent('anthropics/claude-code')
  */
-export const useReadmeContent = (projectId?: string): UseReadmeContentReturn => {
+export const useReadmeContent = (ownerRepo?: string): UseReadmeContentReturn => {
   const { data, error, isLoading } = useSWR(
-    projectId ? ['readme', projectId] : null,
+    ownerRepo && ownerRepo.includes('/') ? ['readme', ownerRepo] : null,
     async () => {
-      if (!projectId) return undefined
-      return await api.getReadmeContent(projectId)
+      if (!ownerRepo || !ownerRepo.includes('/')) return undefined
+      return await api.getReadmeContent(ownerRepo)
     },
     {
       revalidateOnFocus: false,

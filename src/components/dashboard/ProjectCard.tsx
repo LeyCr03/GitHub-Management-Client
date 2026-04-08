@@ -1,6 +1,7 @@
 /**
  * Tarjeta de proyecto
  * Issue 06 - Dashboard y FoldersView
+ * Issue 11 - Integración con Servidor NestJS
  *
  * Muestra:
  * - Imagen de portada (opcional)
@@ -16,17 +17,27 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Star, GitFork, ExternalLink } from 'lucide-react'
 import { abbreviateNumber } from '@/lib/helper'
+import { urlToOwnerRepo } from '@/lib/project-helpers'
 
 interface ProjectCardProps {
   project: Project
-  onSelect?: (projectId: string) => void
+  onSelect?: (ownerRepo: string) => void
 }
 
 export const ProjectCard = ({ project, onSelect }: ProjectCardProps) => {
+  const handleSelect = () => {
+    try {
+      const ownerRepo = urlToOwnerRepo(project.url)
+      onSelect?.(ownerRepo)
+    } catch (error) {
+      console.error('Error al convertir URL a owner/repo:', error)
+    }
+  }
+
   return (
     <Card
       className="p-4 hover:shadow-lg transition-shadow cursor-pointer group"
-      onClick={() => onSelect?.(project.id)}
+      onClick={handleSelect}
     >
       {/* Cover Image */}
       {project.coverImage && (
