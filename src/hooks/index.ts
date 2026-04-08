@@ -1,5 +1,10 @@
-// Hooks personalizados - Issue 04
-// Scaffolded - completar según issue 04
+/**
+ * Hooks Personalizados
+ * Issue 04 - Hooks Personalizados
+ *
+ * Exportación centralizada de todos los custom hooks
+ * Usar: import { useGithubProjects, ... } from '@/hooks'
+ */
 
 export { useGithubProjects } from './useGithubProjects'
 export { useProjectDetail } from './useProjectDetail'
