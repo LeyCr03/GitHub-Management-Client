@@ -14,7 +14,7 @@
 import { useGithubProjects } from '@/hooks'
 import { Tag } from '@/types'
 import { Button } from '@/components/ui/button'
-import { Plus, Home, Github } from 'lucide-react'
+import { Plus, Home, Github, Folder } from 'lucide-react'
 import classNames from 'classnames'
 
 interface SidebarProps {
@@ -57,14 +57,14 @@ export const Sidebar = ({ onTagSelect, selectedTagId }: SidebarProps) => {
       {/* Overview Button */}
       <div className="mb-8">
         <Button
-          variant="secondary"
+          variant={'outline'}
           className="w-full justify-start gap-2"
           onClick={() => onTagSelect?.(null)}
         >
           <Home className="w-4 h-4" />
-          <span>Home</span>
+          <span className='uppercase'>Home</span>
           {projects && (
-            <span className="ml-auto text-xs bg-muted px-2 py-0.5 rounded-full">
+            <span className="ml-auto text-white text-xs bg-muted px-2 py-0.5 rounded-full">
               {projects.length}
             </span>
           )}
@@ -73,9 +73,10 @@ export const Sidebar = ({ onTagSelect, selectedTagId }: SidebarProps) => {
 
       {/* Tags Section */}
       <div className="space-y-4">
-        <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-widest px-2">
-          📁 Carpetas (Tags)
+        <h3 className="text-xs font-semibold text-muted-foreground uppercase flex px-4">
+         <Folder className='w-4 h-4 mr-2'/>Folders
         </h3>
+
 
         {tags && tags.length > 0 ? (
           <div className="space-y-2">
@@ -118,26 +119,18 @@ export const Sidebar = ({ onTagSelect, selectedTagId }: SidebarProps) => {
           </p>
         )}
 
-        {/* Add new tag button */}
-        <Button
-          variant="ghost"
-          className="w-full justify-start gap-2 text-muted-foreground hover:text-foreground mt-4 border border-dashed border-border/40 hover:border-primary/40"
-        >
-          <Plus className="w-4 h-4" />
-          <span className="text-sm">Crear nuevo tag</span>
-        </Button>
+        
       </div>
 
       {/* Total stats */}
-      <div className="mt-8 pt-6 border-t border-border/20 space-y-2">
-        <div className="flex justify-between text-xs text-muted-foreground">
-          <span>Total Tags</span>
-          <span className="font-semibold text-foreground">{tags?.length || 0}</span>
-        </div>
-        <div className="flex justify-between text-xs text-muted-foreground">
-          <span>Total Projects</span>
-          <span className="font-semibold text-foreground">{projects?.length || 0}</span>
-        </div>
+      <div className="absolute bottom-3 w-60 left-4 mb-5 pt-6 border-t border-border/20 space-y-2">
+        <Button
+          variant="default"
+          className="w-full flex justify-center items-center gap-3 rounded-full"
+        >
+          <span className="">Crear nuevo tag</span> 
+          <Plus className="w-4 h-4" />
+        </Button>
       </div>
     </aside>
   )

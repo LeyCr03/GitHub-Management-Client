@@ -1,17 +1,19 @@
 /**
- * Tarjeta de proyecto (FileCard) - SVG File con contenido dentro
+ * Tarjeta de proyecto (FileCard) - HTML/Tailwind estilizado
  * Issue 12 - Rediseño UI Moderno
  *
  * Características:
- * - Card completa como SVG outline (document/file shape)
- * - Contenido (nombre, descripción, stats) dentro del SVG
- * - Ícono de archivo en la esquina superior
- * - Diseño elegante y minimalista
+ * - Card moderna con header de archivo, body con info, footer con acción
+ * - Colores dinámicos para tags basados en el hex del tag
+ * - Hover effects (lift, accent bar, border glow)
+ * - Responsive y compatible con dark mode
  */
 
 import { Project } from '@/types'
-import { ExternalLink } from 'lucide-react'
+import { ExternalLink, FileText, Star, GitFork } from 'lucide-react'
 import { abbreviateNumber } from '@/lib/helper'
+import { Card } from '@/components/ui/card'
+import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 
 interface FileCardProps {
@@ -25,160 +27,88 @@ export const FileCard = ({ project, onSelect }: FileCardProps) => {
     window.open(project.url, '_blank')
   }
 
+  const visibilityLabel = project.visibility === 'private' ? 'Private' : 'Public'
+
   return (
     <button
       onClick={() => onSelect?.(project.url)}
-      className="group relative w-full transition-all duration-200 hover:opacity-80"
-      style={{
-        aspectRatio: '3/4',
-      }}
+      className="group w-full h-full cursor-pointer"
     >
-      {/* SVG File Container con contenido dentro */}
-      <svg
-        viewBox="0 0 280 380"
-        preserveAspectRatio="none"
-        xmlns="http://www.w3.org/2000/svg"
-        className="w-full h-full"
-      >
-        {/* Defs para estilos */}
-        <defs>
-          <style>
-            {`
-              .file-title {
-                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-                font-size: 14px;
-                font-weight: 600;
-                fill: currentColor;
-              }
-              .file-description {
-                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-                font-size: 11px;
-                fill: currentColor;
-                opacity: 0.7;
-              }
-              .file-stat {
-                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-                font-size: 10px;
-                fill: currentColor;
-                opacity: 0.6;
-              }
-            `}
-          </style>
-        </defs>
+      <Card className="relative overflow-hidden h-full flex rounded-md flex-col border-border/40 hover:border-primary/20 hover:shadow-lg transition-all duration-200 hover:-translate-y-1 bg-linear-to-br from-card to-card/80">
+        <div className="absolute top-0 left-0 right-0 h-0.5 opacity-0 group-hover:opacity-100 bg-linear-to-r from-primary to-primary/50 transition-opacity duration-200" />
 
-        {/* Fondo del archivo (outline document shape) */}
-        <path
-          d="M 30 20 L 30 360 C 30 370 38 378 48 378 L 250 378 C 260 378 268 370 268 360 L 268 80 L 180 80 C 170 80 162 72 162 62 L 162 20 C 162 20 30 20"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          opacity="0.2"
-          className="transition-all duration-200 group-hover:opacity-40"
-        />
+        <div className="flex items-center justify-between px-4 pt-4 pb-3 border-b border-border/20 bg-primary/5">
+            <div className="flex items-center gap-1 rounded-full px-2">
+              <Star className="w-3 h-3" fill={project.stats.stars > 0 ? 'yellow' : 'gray'}  color={project.stats.stars > 0 ? 'gold' : 'gray'}/>
+              <span className="font-medium">
+                {abbreviateNumber(project.stats.stars)}
+              </span>
+          </div>
+          <div className="flex items-center gap-1">
+            <GitFork className="w-3 h-3" fill={project.stats.forks > 0 ? 'green' : 'red'}  color={project.stats.forks > 0 ? 'green' : 'red'} />
+            <span className="font-medium">
+              {abbreviateNumber(project.stats.forks)}
+            </span>
+          </div>
+          <span className={`px-2 py-0.5 text-xs font-medium ${visibilityLabel === 'Private' ? ' text-green-700' : ' text-primary/90'} rounded`}>
+            {visibilityLabel}
+          </span>
+        </div>
 
-        {/* Ícono/Header del archivo (pequeño cuadrado coloreado) */}
-        <rect
-          x="25"
-          y="15"
-          width="20"
-          height="20"
-          rx="3"
-          fill={project.stats.language === 'TypeScript' ? '#3178C6' : '#F7DF1E'}
-        />
+        {/* Body */}
+        <div className="p-4 flex-1 flex flex-col gap-4 mt-3">
+          {/* Title and description */}
+          <div>
+            <h3 className="text-sm font-semibold text-foreground truncate">
+              {project.name}
+            </h3>
+            <p className="text-xs text-muted-foreground line-clamp-2 mt-1">
+              {project.description || 'No description'}
+            </p>
+          </div>
 
-        {/* Nombre del proyecto */}
-        <text
-          x="25"
-          y="70"
-          className="file-title"
-        >
-          {project.name.length > 25 ? project.name.substring(0, 25) + '...' : project.name}
-        </text>
+          {/* Tags */}
+          {project.tags.length > 0 && (
+            <div className="flex justify-center items-center gap-2">
+              {project.tags.slice(0, 2).map((tag) => (
+                <Badge
+                  key={tag.id}
+                  variant="outline"
+                  className="text-xs"
+                  style={{
+                    backgroundColor: tag.color + '20',
+                    color: tag.color,
+                    borderColor: tag.color + '40',
+                  }}
+                >
+                  {tag.name.length > 12 ? tag.name.substring(0, 12) : tag.name}
+                </Badge>
+              ))}
+              {project.tags.length > 2 && (
+                <Badge variant="outline" className="text-xs">
+                  +{project.tags.length - 2}
+                </Badge>
+              )}
+            </div>
+          )}
 
-        {/* Descripción */}
-        <text
-          x="25"
-          y="95"
-          className="file-description"
-        >
-          {project.description && project.description.length > 35
-            ? project.description.substring(0, 35) + '...'
-            : project.description || 'No description'}
-        </text>
+          {/* Spacer */}
+          <div className="flex-1 border-t-2 border-primary/10" />
+        </div>
 
-        {/* Línea separadora */}
-        <line
-          x1="25"
-          y1="110"
-          x2="255"
-          y2="110"
-          stroke="currentColor"
-          strokeWidth="0.5"
-          opacity="0.15"
-        />
-
-        {/* Tags */}
-        {project.tags.slice(0, 2).map((tag, index) => (
-          <g key={tag.id}>
-            {/* Tag background */}
-            <rect
-              x={25 + index * 90}
-              y="125"
-              width="80"
-              height="18"
-              rx="4"
-              fill={tag.color}
-              opacity="0.15"
-            />
-            {/* Tag text */}
-            <text
-              x={30 + index * 90}
-              y="137"
-              className="file-stat"
-              fill={tag.color}
-            >
-              {tag.name.length > 10 ? tag.name.substring(0, 10) : tag.name}
-            </text>
-          </g>
-        ))}
-
-        {/* Stats Section */}
-        {/* Stars */}
-        <text x="25" y="170" className="file-stat">
-          ⭐ {abbreviateNumber(project.stats.stars)}
-        </text>
-
-        {/* Forks */}
-        <text x="95" y="170" className="file-stat">
-          🔀 {abbreviateNumber(project.stats.forks)}
-        </text>
-
-        {/* Language */}
-        {project.stats.language && (
-          <text x="165" y="170" className="file-stat">
-            {project.stats.language}
-          </text>
-        )}
-
-        {/* Footer info */}
-        <text x="25" y="200" className="file-description">
-          {new Date().toLocaleDateString('en-US', {
-            month: 'short',
-            day: 'numeric',
-            year: 'numeric',
-          })}
-        </text>
-      </svg>
-
-      {/* View Button */}
-      <Button
-        variant="ghost"
-        size="sm"
-        className="absolute bottom-3 right-3 h-6 w-6 p-0 opacity-60 group-hover:opacity-100 transition-opacity hover:bg-muted/40"
-        onClick={handleViewOnGithub}
-      >
-        <ExternalLink className="w-3.5 h-3.5" />
-      </Button>
+        {/* Footer */}
+        <div className="px-4 pb-4">
+          <Button
+            variant="ghost"
+            size="sm"
+            className="w-full h-8 bg-primary/10 hover:bg-primary/20 text-primary rounded-full flex items-center justify-center gap-1.5 transition-colors duration-200"
+            onClick={handleViewOnGithub}
+          >
+            <span className="text-xs font-medium">View on GitHub</span>
+            <ExternalLink className="w-3 h-3" />
+          </Button>
+        </div>
+      </Card>
     </button>
   )
 }

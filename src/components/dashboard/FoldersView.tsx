@@ -16,7 +16,7 @@ import { useGithubProjects } from '@/hooks'
 import { Project, Tag } from '@/types'
 import { FolderCard } from './FolderCard'
 import { FileCard } from './FileCard'
-import { Folder, FolderOpen } from 'lucide-react'
+import { File, Folder, FolderOpen } from 'lucide-react'
 
 interface FoldersViewProps {
   selectedTagId?: string | null
@@ -125,11 +125,11 @@ export const FoldersView = ({
       {/* Latest Projects */}
       {projects && projects.length > 0 && (
         <div className="space-y-6">
-          <h2 className="text-xl font-bold text-foreground">
-            📌 Latest Projects
+          <h2 className="text-x text-foreground/80 flex items-center">
+          <File className='w-4 h-4  mr-2' /> Latest Projects
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {projects.slice(0, 12).map((project) => (
+            {projects.slice(0, 4).map((project) => (
               <FileCard
                 key={project.id}
                 project={project}
